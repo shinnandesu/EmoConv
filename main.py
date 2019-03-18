@@ -10,7 +10,7 @@ import pyaudio
 import os
 # Mymodels
 import models
-import EmoCon 
+import EmoConv
 import audios
 
     
@@ -22,7 +22,7 @@ def main(sem,scm,wav):
     ABD = models.AnswerModel()   
     answer = ABD.send_audio_request(wav)
     # Convert Emotion from Emotion and Context
-    CVT = EmoCon.Converter()
+    CVT = EmoConv.Converter()
     expression = CVT.convertEmotion(emotion,scm.predicted)
     filename = "output/sorry.wav"
     if(answer!=""):
