@@ -38,7 +38,7 @@ if __name__ == "__main__":
     myAudio = audios.AudioModel()
     MIC = myAudio.check_microphone()
     #load model
-    EmotionModel = load_model("models_file/Emotion_Voice_Detection_Model.h5")
+    EmotionModel = load_model("saved_models/Emotion_Model.h5")
     ContextModel = load_model("models_file/context_model.hdf5")
     #create instance of the model
     SEM = models.SpeechEmotionModel(EmotionModel)

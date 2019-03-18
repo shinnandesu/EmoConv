@@ -84,11 +84,11 @@ class AudioModel:
     def playSound(self,wav):
         try:
             wf = wave.open(wav, "r")
-        except FileNotFoundError: #ファイルが存在しなかった場合
+        except FileNotFoundError: #not existing file
             print("[Error 404] No such file or directory: " + wav)
             return 0
                 
-        # ストリームを開く
+        # open stream 
         p = pyaudio.PyAudio()
         wf = wave.open(wav, "r")
         stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),channels=wf.getnchannels(),rate=wf.getframerate(),output=True)
