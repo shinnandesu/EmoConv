@@ -10,23 +10,19 @@ import pyaudio
 import os
 # Mymodels
 import models
-import converter
+import EmoCon 
 import audios
-import affects
 
     
 def main(sem,scm,wav):
     start_time = time.time()
     #detect emotion
     emotion = sem.detectSpeeechEmotion(wav)
-    #deepaffects
-    DA = affects.DeepAffects()
-    DA.detectEmotion(wav)
     # Answer by Dialogflow
     ABD = models.AnswerModel()   
     answer = ABD.send_audio_request(wav)
     # Convert Emotion from Emotion and Context
-    CVT = converter.Converter()
+    CVT = EmoCon.Converter()
     expression = CVT.convertEmotion(emotion,scm.predicted)
     filename = "output/sorry.wav"
     if(answer!=""):
