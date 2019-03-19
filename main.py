@@ -27,9 +27,15 @@ def main(sem,scm,wav):
     #     # print ("tts_time:{}[sec]".format(time.time() - start_time))
     return filename
 
+def check_dir():
+    if not os.path.exists('output'):
+        os.mkdir('output')
+    if not os.path.exists('input'):
+        os.mkdir('input')
 
 
 if __name__ == "__main__":
+    check_dir()
     myAudio = audios.AudioModel()
     MIC = myAudio.check_microphone()
     #load model

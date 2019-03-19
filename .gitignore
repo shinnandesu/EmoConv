@@ -3,3 +3,5 @@ __pycache__/
 /saved_models/Context_Model.hdf5
 /input
 /output
+config.py
+
