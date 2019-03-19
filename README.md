@@ -9,7 +9,7 @@ The system is written in `python3`.
 
 ```bash
 $ git clone https://github.com/shinnandesu/EmoConv.git
-$ pip install tensorflow==1.12.0 keras==2.2.4 wget
+$ pip install tensorflow==1.12.0 keras==2.2.4 wget pyaudio
 ```
 Install the Watson Developer SDK and Dialogflow SDK
 
@@ -52,12 +52,23 @@ $ python main.py
 ========================================
 Select microphone [0]:
 ```
-Start recording for 5 seconds when you press the ENTER key
+Press the ENTER KEY to start recording for 5 seconds
 ```
-Please push the ENTER KEY to start recording!
+Please press the ENTER KEY to start recording!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 recording for 5 sec...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 finished recording
 ```
 Output the detecting result and play the response.
+```
+1/1 [==============================] - 0s 84ms/step
+========================================
+Query text: I am so good.
+Fulfillment text: Excellent. I'm here to help keep it that way.
+
+Emotion Prediction: Happy
+Context Prediction: Bedroom
+========================================
+Reply Emotion is 'GoodNews'
+```

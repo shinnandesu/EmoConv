@@ -60,7 +60,7 @@ if __name__ == "__main__":
         context_stream.start_stream()
         while context_stream.is_active():
             print('='*40)
-            s = input('Please push the ENTER KEY to start recording!')
+            s = input('Please press the ENTER KEY to start recording!')
             if(s==""):
                 #stop recording the context
                 context_stream.stop_stream()

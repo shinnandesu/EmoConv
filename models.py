@@ -61,7 +61,6 @@ class SpeechContextModel:
             prediction = predictions[k]
             m = np.argmax(prediction)
             predicted.append(m)
-        print(predicted)
         return predicted
 
 class AnswerModel: 
