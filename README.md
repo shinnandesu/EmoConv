@@ -19,8 +19,11 @@ $ pip install dialogflow
 ```
 
 # Setting
+Create `config.py` file.
+```bash
+$ touch config.py
+```
 Edit `config.py` on your keys.
-
 ```python
 g_project_id = 'xxxxxxxx' #Google Cloud Platform project ID 
 g_client_access_token = 'xxxxxxxx' #Google Cloud Platform Access Token
