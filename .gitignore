@@ -2,5 +2,6 @@
 __pycache__/
 /saved_models/Context_Model.hdf5
 /input
-/output
+/output/*
+!sorry.wav
 config.py

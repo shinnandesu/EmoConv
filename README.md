@@ -1,11 +1,11 @@
 # EmoConv
-## Using API
-- Dialogflow API
-- IBM Watson Text to Speech API 
+## Using
+- [Dialogflow API](https://dialogflow.com/)
+- [IBM Watson Text to Speech API](https://text-to-speech-demo.ng.bluemix.net/)
+- [Ubicoustics Model](https://github.com/figlab/ubicoustics)
 
 # System Requirements
-The deep learning system is written in `python3`, specifically `tensorflow` and `keras`.
-
+The system is written in `python3`.
 
 ```bash
 $ git clone https://github.com/shinnandesu/EmoConv.git
@@ -46,12 +46,13 @@ $ python main.py
 ```
 === Available Microphones: ===
 # 0 - Built-in Microphone
+# 1 - Earbud
 ========================================
 1 / 2: Checking Microphones...
 ========================================
 Select microphone [0]:
 ```
-
+Start recording for 5 seconds when you press the ENTER key
 ```
 Please push the ENTER KEY to start recording!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,3 +60,4 @@ recording for 5 sec...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 finished recording
 ```
+Output the detecting result and play the response.
