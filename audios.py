@@ -12,7 +12,7 @@ class AudioModel:
     CHUNK = RATE
     MICROPHONES_DESCRIPTION = []
     FPS = 60.0
-    SECONDS = 3 
+    SECONDS = 5 
     MICROPHONE_INDEX = 0
 
     def check_microphone(self):
@@ -61,7 +61,7 @@ class AudioModel:
         stream = p.open(format=self.FORMAT, channels=self.CHANNELS,rate=self.RATE, input=True,input_device_index = self.MICROPHONE_INDEX, frames_per_buffer=self.CHUNK)
         frames = []
         print("~"*40)                
-        print ("recording...")
+        print ("recording for 5 sec...")
         print("~"*40)                
         for i in range(0, int(self.RATE / self.CHUNK * self.SECONDS)):
             data = stream.read(self.CHUNK)
