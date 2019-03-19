@@ -11,7 +11,6 @@ import audios
 
     
 def main(sem,scm,wav):
-    start_time = time.time()
     #detect emotion
     emotion = sem.detectSpeeechEmotion(wav)
     # Answer by Dialogflow

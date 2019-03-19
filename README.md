@@ -1,4 +1,5 @@
 # EmoConv
+##Using API
 - Dialogflow API
 - IBM Watson Text to Speech API 
 
@@ -39,3 +40,19 @@ export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
 $ python main.py 
 ```
 
+```
+=== Available Microphones: ===
+# 0 - Built-in Microphone
+========================================
+1 / 2: Checking Microphones...
+========================================
+Select microphone [0]:
+```
+
+```
+Please push the ENTER KEY to start recording!
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+recording for 5 sec...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+finished recording
+```
