@@ -72,6 +72,7 @@ everything = {
 29:[2]
 }
 
+
 dummy_expressions = {
     0:"",
     1:"GoodNews",
@@ -121,6 +122,7 @@ workshop_expressions = {
     3:"Apology",
     4:""
 }
+
 outdoor_expressions = {
     0:"",
     1:"GoodNews",
@@ -128,6 +130,15 @@ outdoor_expressions = {
     3:"Apology",
     4:""
 }
+
+expressions = {
+    1:"",
+    2:"Uncertainty",
+    3:"GoodNews",
+    4:"Aology",
+    5:""
+}
+
 context_mapping = {
     0: dummy_expressions, 
     1: bathroom_expressions, 
@@ -153,18 +164,19 @@ context_mapping_word = {
 emotion_mapping_word = {
     0:'Neutral', 
     1:'Happy', 
-    2:'Sad', 
-    3:'Angry',
-    4:'Others'
+    2:'Supportive', 
+    3:'Sad',
+    4:'Angry'
 }
 
 import numpy as np
+import random
 
 class Converter:
     def __init__(self):
         self.count_context = np.array([0]*8)
             
-    def convertEmotion(self,emotion,context):
+    def convertEmotion(self,emotion,context,pattern,reply):
         for i in context:
             for n in (everything[i]):
                 self.count_context[n]+=1
@@ -173,7 +185,16 @@ class Converter:
         print("Emotion Prediction: "+emotion_mapping_word[emotion])
         print("Context Prediction: "+context_mapping_word[target_context])
         print("="*40)
-        target_emotion = target_expression[emotion]
+        target_emotion = ""
+        if(pattern== 0):
+            target_emotion = "Neutral"
+        elif(pattern== 1):
+            target_emotion = expressions[random.randint(1,5)]
+        elif(pattern== 2):
+            target_emotion = target_expression[emotion]
+        elif(pattern== 3):
+            target_emotion = expressions[int(reply)]
+
         target_emotion = "Neutral" if target_emotion == "" else target_emotion
         print("Reply Emotion is '{}'".format(target_emotion))
         return target_emotion

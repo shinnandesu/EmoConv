@@ -1,0 +1,11 @@
+###### Requirements without Version Specifiers ######`
+wget
+pyaudio
+pandas
+librosa
+dialogflow
+watson-developer-cloud
+tensorflow
+
+###### Requirements with Version Specifiers ######`
+keras == 2.2.4            # Minimum version 4.1.1

@@ -10,7 +10,7 @@ import EmoConv
 import audios
 
     
-def main(sem,scm,wav):
+def main(sem,scm,wav,patterni,reply):
     #detect emotion
     emotion = sem.detectSpeeechEmotion(wav)
     # Answer by Dialogflow
@@ -18,13 +18,13 @@ def main(sem,scm,wav):
     answer = ABD.send_audio_request(wav)
     # Convert Emotion from Emotion and Context
     CVT = EmoConv.Converter()
-    expression = CVT.convertEmotion(emotion,scm.predicted)
+    expression = CVT.convertEmotion(emotion,scm.predicted,pattern,reply)
     filename = "output/sorry.wav"
-    # if(answer!=""):
-    #     # Text to Speech with Emotion 
-    #     TTS = models.TTSModel()
-    #     filename = TTS.getSpeechFile(answer,expression)
-    #     # print ("tts_time:{}[sec]".format(time.time() - start_time))
+    if(answer!=""):
+        # Text to Speech with Emotion 
+        TTS = models.TTSModel()
+        filename = TTS.getSpeechFile(answer,expression)
+        # print ("tts_time:{}[sec]".format(time.time() - start_time))
     return filename
 
 def check_dir():
@@ -54,25 +54,30 @@ if __name__ == "__main__":
     #clear the console
     clear = lambda: os.system('clear')
     clear()
-    while True:
+    pattern = 0
+    reply = 0
+    while pattern<4:
         # recording the context by stream
         context_stream = myAudio.stream_record(SCM.audio_samples)
         context_stream.start_stream()
         while context_stream.is_active():
-            print('='*40)
-            s = input('Please press the ENTER KEY to start recording!')
-            if(s==""):
+            if(pattern== 3):
+                reply = int(input("Select manually reply (1:Neutral 2:Supportive 3:Happy 4:Sad 5:Angry) "))
+            ent = input('Please press the ENTER KEY to start recording!')
+            if(ent==""):
                 #stop recording the context
                 context_stream.stop_stream()
                 #start recording the voice
                 input_file = myAudio.voice_record()
                 #execute the main method
-                output_file = main(SEM,SCM,input_file)
+                output_file = main(SEM,SCM,input_file,pattern,reply)
                 #play audio sounds
                 myAudio.playSound(output_file)
+                pattern += 1
+            elif(int(ent)<4):
+                pattern = int(ent)    
+                print("set the pattern " + str(pattern))
             else:
                 continue
-        
-
-
-
+    print("Thank you very much for your survey!")
+            
