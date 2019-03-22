@@ -8,14 +8,7 @@
 The system is written in `python3`.
 
 ```bash
-$ git clone https://github.com/shinnandesu/EmoConv.git
-$ pip install tensorflow==1.12.0 keras==2.2.4 wget pyaudio
-```
-Install the Watson Developer SDK and Dialogflow SDK
-
-```bash
-$ pip install --upgrade watson-developer-cloud
-$ pip install dialogflow
+$ pip install -r requirement.txt 
 ```
 
 # Setting
