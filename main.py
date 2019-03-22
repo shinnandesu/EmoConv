@@ -56,14 +56,19 @@ if __name__ == "__main__":
     clear()
     pattern = 0
     reply = 0
-    while pattern<4:
+    while True:
         # recording the context by stream
         context_stream = myAudio.stream_record(SCM.audio_samples)
         context_stream.start_stream()
         while context_stream.is_active():
-            if(pattern== 3):
-                reply = int(input("Select manually reply (1:Neutral 2:Supportive 3:Happy 4:Sad 5:Angry) "))
-            ent = input('Please press the ENTER KEY to start recording!')
+            pattern = int(input("Select the survey pattern (1:Neutral 2:Random 3:Adaptation 4:Manual): "))
+            if(pattern== 4):
+                reply = int(input("Select emotional reply you want (1:Neutral 2:Supportive 3:Happy 4:Sad 5:Angry): "))
+            elif(pattern<5 and pattern>0):
+                print("The current pattern is "+str(pattern))
+            else:
+                continue
+            ent = input('Please press the ENTER KEY to start recording! ')
             if(ent==""):
                 #stop recording the context
                 context_stream.stop_stream()
@@ -73,11 +78,6 @@ if __name__ == "__main__":
                 output_file = main(SEM,SCM,input_file,pattern,reply)
                 #play audio sounds
                 myAudio.playSound(output_file)
-                pattern += 1
-            elif(int(ent)<4):
-                pattern = int(ent)    
-                print("set the pattern " + str(pattern))
             else:
                 continue
-    print("Thank you very much for your survey!")
             

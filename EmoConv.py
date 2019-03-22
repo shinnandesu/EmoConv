@@ -135,7 +135,7 @@ expressions = {
     1:"",
     2:"Uncertainty",
     3:"GoodNews",
-    4:"Aology",
+    4:"Apology",
     5:""
 }
 
@@ -186,13 +186,13 @@ class Converter:
         print("Context Prediction: "+context_mapping_word[target_context])
         print("="*40)
         target_emotion = ""
-        if(pattern== 0):
+        if(pattern== 1):
             target_emotion = "Neutral"
-        elif(pattern== 1):
-            target_emotion = expressions[random.randint(1,5)]
         elif(pattern== 2):
-            target_emotion = target_expression[emotion]
+            target_emotion = expressions[random.randint(1,5)]
         elif(pattern== 3):
+            target_emotion = target_expression[emotion]
+        elif(pattern== 4):
             target_emotion = expressions[int(reply)]
 
         target_emotion = "Neutral" if target_emotion == "" else target_emotion
