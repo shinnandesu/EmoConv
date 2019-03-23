@@ -5,3 +5,4 @@ __pycache__/
 /output/*
 !sorry.wav
 config.py
+Small-Talk.json

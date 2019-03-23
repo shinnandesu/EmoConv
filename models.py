@@ -105,6 +105,10 @@ class TTSModel:
     def getSpeechFile(self,t,e):
         output_wav = "./output/output-{}.wav".format(time.strftime("%Y%m%d-%H%M%S"))
         SSML = '<express-as type="{}">{}</express-as>'.format(e,t)
+        if(e =="Angry"):
+            SSML = '<voice-transformation type="Custom" pitch="50%" pitch_range="80%" rate="40%" glottal_tension="100%" breathiness="60%">{}</voice-transformation>'.format(t)
+        elif(e=="Supportive"):
+            SSML = '<voice-transformation type="Custom" glottal_tension="-80%">{}</voice-transformation>'.format(t)
         tts = TextToSpeechV1(iam_apikey=self.key,url= self.url)
         # result = tts.list_voices().get_result()
         with open(output_wav,'wb') as audio_file:

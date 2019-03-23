@@ -133,10 +133,10 @@ outdoor_expressions = {
 
 expressions = {
     1:"",
-    2:"Uncertainty",
+    2:"Supportive",
     3:"GoodNews",
     4:"Apology",
-    5:""
+    5:"Angry"
 }
 
 context_mapping = {
@@ -164,9 +164,9 @@ context_mapping_word = {
 emotion_mapping_word = {
     0:'Neutral', 
     1:'Happy', 
-    2:'Supportive', 
-    3:'Sad',
-    4:'Angry'
+    2:'Upset', 
+    3:'Angry',
+    4:'Others'
 }
 
 import numpy as np
@@ -187,7 +187,7 @@ class Converter:
         print("="*40)
         target_emotion = ""
         if(pattern== 1):
-            target_emotion = "Neutral"
+            target_emotion = ""
         elif(pattern== 2):
             target_emotion = expressions[random.randint(1,5)]
         elif(pattern== 3):
