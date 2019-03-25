@@ -75,7 +75,7 @@ class AnswerModel:
     # Note: hard coding audio_encoding and sample_rate_hertz for simplicity.
     
     def send_audio_request(self,path):
-
+        query_mapping={"sports-win":1,"sports-lost":2,"machine-broken":3}
         session = self.session_client.session_path(self.project_id, self.session_id)
         # print('Session path: {}\n'.format(session))
         with open(path, 'rb') as audio_file:
@@ -95,8 +95,12 @@ class AnswerModel:
         #     response.query_result.intent_detection_confidence))
         answer = response.query_result.fulfillment_text
         print('Fulfillment text: {}\n'.format(answer))
+        try:
+            scenario_emotion = query_mapping[response.query_result.intent.display_name]
+        except:
+            scenario_emotion = 0
 
-        return answer
+        return answer,scenario_emotion
 
 class TTSModel:
     key = config.tts_key

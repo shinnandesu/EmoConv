@@ -1,4 +1,5 @@
 import pyaudio
+import pandas as pd
 from keras.models import load_model
 from ubicoustics.vggish_input import waveform_to_examples, wavfile_to_examples
 import os
@@ -9,16 +10,17 @@ import models
 import EmoConv
 import audios
 
+
     
-def main(sem,scm,wav,patterni,reply):
+def main(sem,scm,wav,pattern,reply):
     #detect emotion
-    emotion = sem.detectSpeeechEmotion(wav)
+    real_emotion = sem.detectSpeeechEmotion(wav)
     # Answer by Dialogflow
     ABD = models.AnswerModel()   
-    answer = ABD.send_audio_request(wav)
+    answer,scenario_emotion = ABD.send_audio_request(wav)
     # Convert Emotion from Emotion and Context
     CVT = EmoConv.Converter()
-    expression = CVT.convertEmotion(emotion,scm.predicted,pattern,reply)
+    expression = CVT.convertEmotion(real_emotion,scenario_emotion,scm.predicted,pattern,reply)
     filename = "output/sorry.wav"
     if(answer!=""):
         # Text to Speech with Emotion 
@@ -32,8 +34,7 @@ def check_dir():
         os.mkdir('output')
     if not os.path.exists('input'):
         os.mkdir('input')
-
-
+    
 if __name__ == "__main__":
     check_dir()
     myAudio = audios.AudioModel()
@@ -56,28 +57,30 @@ if __name__ == "__main__":
     clear()
     pattern = 0
     reply = 0
+    # scenario = 0 
     while True:
         # recording the context by stream
         context_stream = myAudio.stream_record(SCM.audio_samples)
         context_stream.start_stream()
         while context_stream.is_active():
-            pattern = int(input("Select the survey pattern (1:Neutral 2:Random 3:Adaptation 4:Manual): "))
-            if(pattern== 4):
-                reply = int(input("Select emotional reply you want (1:Neutral 2:Supportive 3:Happy 4:Sad 5:Angry): "))
-            elif(pattern<5 and pattern>0):
-                print("The current pattern is "+str(pattern))
+            try:
+                # scenario = int(input("Select the scenario (1:Neutral 2:Happy 3:Upset 4:Angry): "))
+                pattern = int(input("Select the survey pattern (0:Neutral 1:Random 2:Adaptation 3:Manual): "))
+                if(pattern== 3):
+                    reply = int(input("Select emotional reply you want (0:Neutral 1:Supportive 2:Happy 3:Sad 4:Angry): "))
+            except:
+                continue
+
+            if(reply<5 and pattern<4):
+                ent = input('Please press the ENTER KEY to start recording! ')
+                if(ent==""):
+                    #stop recording the context
+                    context_stream.stop_stream()
+                    #start recording the voice
+                    input_file = myAudio.voice_record()
+                    #execute the main method
+                    output_file = main(SEM,SCM,input_file,pattern,reply)
+                    #play audio sounds
+                    myAudio.playSound(output_file)
             else:
                 continue
-            ent = input('Please press the ENTER KEY to start recording! ')
-            if(ent==""):
-                #stop recording the context
-                context_stream.stop_stream()
-                #start recording the voice
-                input_file = myAudio.voice_record()
-                #execute the main method
-                output_file = main(SEM,SCM,input_file,pattern,reply)
-                #play audio sounds
-                myAudio.playSound(output_file)
-            else:
-                continue
-            

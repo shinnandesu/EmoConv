@@ -76,49 +76,49 @@ everything = {
 dummy_expressions = {
     0:"",
     1:"GoodNews",
-    2:"Uncertainty",
+    2:"Supportive",
     3:"Apology",
     4:""
 }
 bathroom_expressions = {
     0:"",
     1:"GoodNews",
-    2:"Uncertainty",
+    2:"Supportive",
     3:"Apology",
     4:""
 }
 kitchen_expressions = {
     0:"",
     1:"GoodNews",
-    2:"Uncertainty",
+    2:"Supportive",
     3:"Apology",
     4:""
 }
 bedroom_expressions = {
     0:"",
     1:"GoodNews",
-    2:"Uncertainty",
+    2:"Supportive",
     3:"Apology",
     4:""
 }
 office_expressions = {
     0:"",
     1:"GoodNews",
-    2:"Uncertainty",
+    2:"Supportive",
     3:"Apology",
     4:""
 }
 entrance_expressions = {
     0:"",
     1:"GoodNews",
-    2:"Uncertainty",
+    2:"Supportive",
     3:"Apology",
     4:""  
 }
 workshop_expressions = {
     0:"",
     1:"GoodNews",
-    2:"Uncertainty",
+    2:"Supportive",
     3:"Apology",
     4:""
 }
@@ -126,17 +126,17 @@ workshop_expressions = {
 outdoor_expressions = {
     0:"",
     1:"GoodNews",
-    2:"Uncertainty",
+    2:"",
     3:"Apology",
     4:""
 }
 
 expressions = {
-    1:"",
-    2:"Supportive",
-    3:"GoodNews",
-    4:"Apology",
-    5:"Angry"
+    0:"",
+    1:"Supportive",
+    2:"GoodNews",
+    3:"Apology",
+    4:"Angry"
 }
 
 context_mapping = {
@@ -168,35 +168,49 @@ emotion_mapping_word = {
     3:'Angry',
     4:'Others'
 }
+emotion_mapping={
+    "":"Neutral",
+    "GoodNews":"Happy",
+    "Supportive":"Supportive",
+    "Angry":"Angry",
+    "Apology":"Sad" 
+}
 
 import numpy as np
 import random
+import time
+import csv
 
 class Converter:
     def __init__(self):
         self.count_context = np.array([0]*8)
             
-    def convertEmotion(self,emotion,context,pattern,reply):
+    def convertEmotion(self,real_emotion,scenario_emotion,context,pattern,reply):
         for i in context:
             for n in (everything[i]):
                 self.count_context[n]+=1
         target_context = self.count_context.argmax()
         target_expression = context_mapping[target_context]
-        print("Emotion Prediction: "+emotion_mapping_word[emotion])
+        print("Emotion Prediction: "+emotion_mapping_word[real_emotion])
         print("Context Prediction: "+context_mapping_word[target_context])
         print("="*40)
         target_emotion = ""
-        if(pattern== 1):
+        if(pattern== 0):
             target_emotion = ""
+        elif(pattern== 1):
+            target_emotion = expressions[random.randint(0,4)]
         elif(pattern== 2):
-            target_emotion = expressions[random.randint(1,5)]
+            target_emotion = target_expression[scenario_emotion]
         elif(pattern== 3):
-            target_emotion = target_expression[emotion]
-        elif(pattern== 4):
             target_emotion = expressions[int(reply)]
 
-        target_emotion = "Neutral" if target_emotion == "" else target_emotion
-        print("Reply Emotion is '{}'".format(target_emotion))
+        data = [time.time(),pattern,context,emotion_mapping_word[scenario_emotion],emotion_mapping_word[real_emotion],target_emotion]
+        with open('result.csv','a') as f:
+            writer = csv.writer(f, lineterminator='\n') # 行末は改行
+            writer.writerow(data)
+
+        # target_emotion = "Neutral" if target_emotion == "" else target_emotion
+        print("Reply Emotion is '{}'".format(emotion_mapping[target_emotion]))
+
         return target_emotion
     
-
