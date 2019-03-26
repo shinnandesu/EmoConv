@@ -12,15 +12,16 @@ import audios
 
 
     
-def main(sem,scm,wav,pattern,reply):
+def main(sem,scm,wav,pattern,reply,context):
     #detect emotion
     real_emotion = sem.detectSpeeechEmotion(wav)
     # Answer by Dialogflow
     ABD = models.AnswerModel()   
     answer,scenario_emotion = ABD.send_audio_request(wav)
     # Convert Emotion from Emotion and Context
-    CVT = EmoConv.Converter()
-    expression = CVT.convertEmotion(real_emotion,scenario_emotion,scm.predicted,pattern,reply)
+    CVT = EmoConv.Converter(context,scenario_emotion)
+
+    expression = CVT.convertEmotion(real_emotion,scm.predicted,pattern,reply)
     filename = "output/sorry.wav"
     if(answer!=""):
         # Text to Speech with Emotion 
@@ -57,17 +58,20 @@ if __name__ == "__main__":
     clear()
     pattern = 0
     reply = 0
-    # scenario = 0 
+    context = int(input("Select the context (0:Home 1:Public 2:Alone 3:Group): "))
+        
     while True:
         # recording the context by stream
         context_stream = myAudio.stream_record(SCM.audio_samples)
         context_stream.start_stream()
         while context_stream.is_active():
             try:
-                # scenario = int(input("Select the scenario (1:Neutral 2:Happy 3:Upset 4:Angry): "))
-                pattern = int(input("Select the survey pattern (0:Neutral 1:Random 2:Adaptation 3:Manual): "))
+                print('=' * 70)
+                pattern = int(input("Select the adaptation pattern (0:No 1:Random 2:Auto 3:Manual): "))
+                print('=' * 70)
                 if(pattern== 3):
                     reply = int(input("Select emotional reply you want (0:Neutral 1:Supportive 2:Happy 3:Sad 4:Angry): "))
+                    print('=' * 70)
             except:
                 continue
 
@@ -76,10 +80,10 @@ if __name__ == "__main__":
                 if(ent==""):
                     #stop recording the context
                     context_stream.stop_stream()
-                    #start recording the voice
+                     #start recording the voice
                     input_file = myAudio.voice_record()
                     #execute the main method
-                    output_file = main(SEM,SCM,input_file,pattern,reply)
+                    output_file = main(SEM,SCM,input_file,pattern,reply,context)
                     #play audio sounds
                     myAudio.playSound(output_file)
             else:
