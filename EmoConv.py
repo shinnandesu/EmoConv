@@ -183,11 +183,10 @@ class Converter:
                 self.count_context[n]+=1
         real_context = self.count_context.argmax()
         target_expression = scenario_context_mapping[self.scenario_context]
-        print("Emotion Prediction: "+detect_emotion_mapping[real_emotion])
-        print("Context Prediction: "+detect_context_mapping[real_context])
-        print("="*40)
-        print("Emotion Scenario: "+detect_emotion_mapping[self.scenario_emotion])
-        print("Context Scenario: "+scenario_context_mapping_word[self.scenario_context])
+        # print("Emotion Prediction: "+detect_emotion_mapping[real_emotion])
+        # print("Emotion Scenario: "+detect_emotion_mapping[self.scenario_emotion])
+        # print("Context Prediction: "+detect_context_mapping[real_context])
+        # print("Context Scenario: "+scenario_context_mapping_word[self.scenario_context])
         print("="*40)
         target_emotion = ""
         if(pattern== 0):

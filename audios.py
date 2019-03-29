@@ -8,7 +8,7 @@ class AudioModel:
     # Variables
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
-    RATE = 16000
+    RATE = 16000 
     CHUNK = RATE
     MICROPHONES_DESCRIPTION = []
     FPS = 60.0
@@ -98,5 +98,6 @@ class AudioModel:
             a+=1
             stream.write(data)
             data = wf.readframes(self.CHUNK)
+        stream.close()    
         p.terminate()
 

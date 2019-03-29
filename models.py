@@ -98,7 +98,7 @@ class AnswerModel:
         #     response.query_result.intent.display_name,
         #     response.query_result.intent_detection_confidence))
         answer = response.query_result.fulfillment_text
-        print('Fulfillment text: {}\n'.format(answer))
+        print('Fulfillment text: {}'.format(answer))
         try:
             scenario_emotion = query_mapping[response.query_result.intent.display_name]
         except:

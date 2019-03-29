@@ -12,7 +12,7 @@ import audios
 
 
     
-def main(sem,scm,wav,pattern,reply,context):
+def main(sem,scm,wav,pattern,reply,context,myAudio):
     #detect emotion
     real_emotion = sem.detectSpeeechEmotion(wav)
     # Answer by Dialogflow
@@ -27,6 +27,7 @@ def main(sem,scm,wav,pattern,reply,context):
         # Text to Speech with Emotion 
         TTS = models.TTSModel()
         filename = TTS.getSpeechFile(answer,expression)
+    myAudio.playSound(filename)
         # print ("tts_time:{}[sec]".format(time.time() - start_time))
     return filename
 
@@ -83,8 +84,7 @@ if __name__ == "__main__":
                      #start recording the voice
                     input_file = myAudio.voice_record()
                     #execute the main method
-                    output_file = main(SEM,SCM,input_file,pattern,reply,context)
+                    main(SEM,SCM,input_file,pattern,reply,context,myAudio)
                     #play audio sounds
-                    myAudio.playSound(output_file)
             else:
                 continue
