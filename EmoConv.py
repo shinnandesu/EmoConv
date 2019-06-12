@@ -194,7 +194,7 @@ class Converter:
         elif(pattern== 1):
             target_emotion = expressions[random.randint(0,4)]
         elif(pattern== 2):
-            target_emotion = target_expression[self.scenario_emotion]
+            target_emotion = target_expression[real_emotion]
         elif(pattern== 3):
             target_emotion = expressions[int(reply)]
 

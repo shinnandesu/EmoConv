@@ -10,9 +10,10 @@ import models
 import EmoConv
 import audios
 import time
+import tkinter
 
+label_text = ""
 
-    
 def main(sem,scm,wav,pattern,reply,context,myAudio):
     #detect emotion
     real_emotion = sem.detectSpeeechEmotion(wav)
@@ -40,7 +41,16 @@ def check_dir():
         os.mkdir('output')
     if not os.path.exists('input'):
         os.mkdir('input')
-    
+def click_btn(SEM,SCM,pattern,reply,context,myAudio):
+    # button_clicked = True
+    print("clicked")
+    tekisuto["text"] = "recording 5sec..."
+    input_file = myAudio.voice_record()
+    tekisuto["text"] = "finish"
+
+    #execute the main method
+    main(SEM,SCM,input_file,pattern,reply,context,myAudio)
+
 if __name__ == "__main__":
     check_dir()
     myAudio = audios.AudioModel()
@@ -61,34 +71,33 @@ if __name__ == "__main__":
     #clear the console
     clear = lambda: os.system('clear')
     clear()
-    pattern = 0
+    pattern = 2
     reply = 0
-    context = int(input("Select the context (0:Home 1:Public 2:Alone 3:Group): "))
-        
-    while True:
-        # recording the context by stream
-        context_stream = myAudio.stream_record(SCM.audio_samples)
-        context_stream.start_stream()
-        while context_stream.is_active():
-            try:
-                print('=' * 70)
-                pattern = int(input("Select the adaptation pattern (0:No 1:Random 2:Auto 3:Manual): "))
-                print('=' * 70)
-                if(pattern== 3):
-                    reply = int(input("Select emotional reply you want (0:Neutral 1:Supportive 2:Happy 3:Sad 4:Angry): "))
-                    print('=' * 70)
-            except:
-                continue
+    context = 0
+    
+    root = tkinter.Tk()
+    root.title(u"Software Title")
+    root.geometry("400x300")
+    #ボタン
+    Button = tkinter.Button(text='Start Recording',command=lambda:click_btn(SEM,SCM,pattern,reply,context,myAudio))
+    Button.pack()
+    Button.place(x=10,y=30)
 
-            if(reply<5 and pattern<4):
-                ent = input('Please press the ENTER KEY to start recording! ')
-                if(ent==""):
-                    #stop recording the context
-                    context_stream.stop_stream()
-                     #start recording the voice
-                    input_file = myAudio.voice_record()
-                    #execute the main method
-                    main(SEM,SCM,input_file,pattern,reply,context,myAudio)
-                    #play audio sounds
-            else:
-                continue
+    tekisuto = tkinter.Label(text=label_text)
+    tekisuto.place(x=150, y=5)
+
+    root.mainloop() 
+    # context_stream = myAudio.stream_record(SCM.audio_samples)
+    # context_stream.start_stream()
+    # while context_stream.is_active():
+        # print("hoge")
+        # if button_clicked == True: 
+            #stop recording the context
+            # context_stream.stop_stream()
+            # input_file = myAudio.voice_record()
+            #execute the main method
+            # main(SEM,SCM,input_file,pattern,reply,context,myAudio)
+            # button_clicked = False
+            #play audio sounds
+        # else:
+        #     continue
